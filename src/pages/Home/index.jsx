@@ -1,15 +1,13 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 import NavbarMenu from "../../components/NavbarMenu";
-import { useAuth } from "../../hooks/AuthProvider";
+import Private from "../../components/Private";
 
 const Home = () => {
-  const { user, token } = useAuth();
-  if (user == null || !token) {
-    return <Navigate to="/login" />;
-  } else {
-    return <NavbarMenu />;
-  }
+  return (
+    <Private>
+      <NavbarMenu />
+    </Private>
+  );
 };
 
 export default Home;

@@ -1,167 +1,226 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, createElement } from "react";
 import { Link } from "react-router-dom";
+import {
+  Navbar,
+  IconButton,
+  Typography,
+  Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Avatar,
+  Collapse,
+} from "@material-tailwind/react";
+import {
+  UserCircleIcon,
+  ChevronDownIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  PowerIcon,
+  Bars2Icon,
+  CodeBracketSquareIcon,
+} from "@heroicons/react/24/solid";
 import { useAuth } from "../../hooks/AuthProvider";
 import Logo from "../../assets/logo.png";
+import UserProfile from "../../assets/user-profile.jpg";
 
-const NavbarMenu = () => {
-  const [toggleMenu, setToggleMenu] = useState(false);
+const ProfileMenu = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   const userAuth = useAuth();
 
   return (
-    <React.Fragment>
-      <div className="flex flex-wrap place-items-center">
-        <section className="relative mx-auto">
-          <nav
-            className="flex justify-between bg-gray-900 text-white w-screen"
-            role="navigation"
-          >
-            <div className="px-5 xl:px-12 py-6 flex w-full items-center">
-              <Link
-                to="/home"
-                replace={true}
-                className="text-3xl font-bold font-heading"
-              >
-                <img className="h-9" src={Logo} alt="logo" />
-              </Link>
-              <Link
-                to="/login"
-                replace={true}
-                className="font-bold font-heading px-5 hover:text-gray-200"
-              >
-                Stock Market Analyzer
-              </Link>
-              <div
-                className={`${
-                  toggleMenu ? "block" : "hidden"
-                } xl:hidden mx-auto`}
-              >
-                <ul className="flex flex-col items-center justify-center text-center">
-                  <li>
-                    <Link
-                      to="/home"
-                      replace={true}
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      Home
-                    </Link>
-                    <Link
-                      to="/home"
-                      replace={true}
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 hover:text-gray-200 mx-auto"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      <small className="mx-2">Olá, {userAuth?.user.name}</small>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 ml-auto lg:ml-2"
+        >
+          <small className="mx-2 text-white">Olá, {userAuth?.user.name}</small>
+          <Avatar
+            variant="circular"
+            size="sm"
+            alt="User profile"
+            className="border border-gray-200 p-0.5"
+            src={UserProfile}
+          />
+          <ChevronDownIcon
+            strokeWidth={2.5}
+            className={`h-3 w-3 transition-transform ${
+              isMenuOpen ? "rotate-180" : ""
+            }`}
+          />
+        </Button>
+      </MenuHandler>
 
-              <div className="hidden xl:flex ml-auto items-center space-x-5 items-center">
-                <Link
-                  to="/home"
-                  replace={true}
-                  className="flex items-center hover:text-gray-200"
-                >
-                  <small className="mx-2">Olá, {userAuth?.user.name}</small>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 hover:text-gray-200"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </Link>
-              </div>
-            </div>
-
-            <button
-              className="navbar-burger self-center mr-12 xl:hidden"
-              onClick={() => setToggleMenu((prev) => !prev)}
+      <MenuList className="p-1 bg-midnight text-white">
+        <MenuItem
+          onClick={closeMenu}
+          className="flex items-center gap-2 rounded"
+        >
+          {createElement(UserCircleIcon, {
+            className: "h-4 w-4",
+            strokeWidth: 2,
+          })}
+          <Link to="/path" replace={true}>
+            <Typography
+              as="span"
+              variant="small"
+              className="font-normal"
+              color={"inherit"}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 hover:text-gray-200"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </nav>
-        </section>
+              My Profile
+            </Typography>
+          </Link>
+        </MenuItem>
+
+        <MenuItem
+          onClick={closeMenu}
+          className="flex items-center gap-2 rounded"
+        >
+          {createElement(Cog6ToothIcon, {
+            className: "h-4 w-4",
+            strokeWidth: 2,
+          })}
+          <Link to="/path" replace={true}>
+            <Typography
+              as="span"
+              variant="small"
+              className="font-normal"
+              color={"inherit"}
+            >
+              Edit
+            </Typography>
+          </Link>
+        </MenuItem>
+
+        <MenuItem
+          onClick={closeMenu}
+          className="flex items-center gap-2 rounded"
+        >
+          {createElement(InboxArrowDownIcon, {
+            className: "h-4 w-4",
+            strokeWidth: 2,
+          })}
+          <Link to="/path" replace={true}>
+            <Typography
+              as="span"
+              variant="small"
+              className="font-normal"
+              color={"inherit"}
+            >
+              Inbox
+            </Typography>
+          </Link>
+        </MenuItem>
+
+        <MenuItem
+          onClick={closeMenu}
+          className="flex items-center gap-2 rounded "
+        >
+          {createElement(PowerIcon, {
+            className: "h-4 w-4 text-red-500",
+            strokeWidth: 2,
+          })}
+          <Typography
+            as="span"
+            variant="small"
+            className="font-normal"
+            color={"red"}
+            onClick={() => {
+              console.log("logout...");
+              userAuth.logOut();
+            }}
+          >
+            Sign Out
+          </Typography>
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+};
+
+const navListItems = [
+  {
+    label: "Exchanges",
+    icon: CodeBracketSquareIcon,
+  },
+];
+
+const NavList = () => {
+  return (
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
+      {navListItems.map(({ label, icon }, key) => (
+        <Link to="/exchanges" replace={true} key={key}>
+          <Typography
+            as="span"
+            variant="small"
+            color="gray"
+            className="font-medium text-white"
+          >
+            <MenuItem className="flex items-center gap-2 lg:rounded-full text-xs">
+              {createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
+              <span className="text-white">{label}</span>
+            </MenuItem>
+          </Typography>
+        </Link>
+      ))}
+    </ul>
+  );
+};
+
+const NavbarMenu = () => {
+  const [isNavOpen, setIsNavOpen] = React.useState(false);
+
+  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
+
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setIsNavOpen(false)
+    );
+  }, []);
+
+  return (
+    <Navbar
+      className="text-white mx-auto w-full max-w-none p-2 lg:pl-6 rounded-sm"
+      style={{ backgroundColor: "#121063" }}
+    >
+      <div className="relative mx-auto flex items-center justify-items-start">
+        <Link to="/home" replace={true}>
+          <img src={Logo} alt="logo" className="h-9" />
+        </Link>
+        <Link to="/home" replace={true}>
+          <Typography
+            as="span"
+            className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+          >
+            Crypto Market Analyzer
+          </Typography>
+        </Link>
+        <div className="hidden lg:block lg:ml-auto">
+          <NavList />
+        </div>
+        <ProfileMenu />
+        <IconButton
+          size="sm"
+          color="blue-gray"
+          variant="text"
+          onClick={toggleIsNavOpen}
+          className="mr-2 lg:hidden"
+        >
+          <Bars2Icon className="h-6 w-6" />
+        </IconButton>
       </div>
-    </React.Fragment>
+      <Collapse open={isNavOpen} className="overflow-hidden">
+        <NavList />
+      </Collapse>
+    </Navbar>
   );
 };
 
 export default NavbarMenu;
-/**
- * 
- * <div className={`${toggleMenu ? "block" : "hidden"}`}>
-                <ul className="xl:hidden px-4 mx-auto font-semibold font-heading space-x-12">
-                  <li>
-                    <Link
-                      to="/home"
-                      replace={true}
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    ></Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* 
-                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 items-center">
-                  <a
-                    href="#home"
-                    
-                  >
-                    Home
-                  </a>
-                  <a
-                    href="#about"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    About
-                  </a>
-                  <a
-                    href="#services"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    Services
-                  </a>
-                  <a
-                    href="#contact"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                  >
-                    Contact
-                  </a>
-                </div>
-              </div> }
- * 
- */

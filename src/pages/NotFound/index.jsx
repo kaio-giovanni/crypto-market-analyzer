@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const NotFound = () => {
   return (
-    <div className="bg-gray-900 text-white text-center h-screen">
+    <div className="bg-midnight text-white text-center py-20 h-screen w-full">
       <h1 className="mb-4 text-6xl font-semibold text-red-500">404</h1>
       <p className="mb-4 text-lg text-gray-600">
         Oops! Looks like you're lost.
