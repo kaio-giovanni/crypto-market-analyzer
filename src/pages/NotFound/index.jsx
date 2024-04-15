@@ -6,7 +6,7 @@ const NotFound = () => {
     <div className="bg-midnight text-white text-center py-20 h-screen w-full">
       <h1 className="mb-4 text-6xl font-semibold text-red-500">404</h1>
       <p className="mb-4 text-lg text-gray-600">
-        Oops! Looks like you're lost.
+        Oops! Parece que você está perdido.
       </p>
       <div className="animate-bounce">
         <svg
@@ -24,11 +24,10 @@ const NotFound = () => {
         </svg>
       </div>
       <p className="mt-4 text-gray-600">
-        Let's get you back{" "}
-        <Link to="/home" replace={true} className="text-blue-500">
+        Vamos levar você de volta, clique no link para ir para a página inicial
+        <Link to="/home" replace={true} className="text-blue-500 m-2">
           home
         </Link>
-        .
       </p>
     </div>
   );

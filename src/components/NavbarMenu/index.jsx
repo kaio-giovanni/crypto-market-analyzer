@@ -21,16 +21,14 @@ import {
   Bars2Icon,
   CodeBracketSquareIcon,
 } from "@heroicons/react/24/solid";
-import { useAuth } from "../../hooks/AuthProvider";
+import { useAuth0 } from "@auth0/auth0-react";
 import Logo from "../../assets/logo.png";
-import UserProfile from "../../assets/user-profile.jpg";
 
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logout, user } = useAuth0();
 
   const closeMenu = () => setIsMenuOpen(false);
-
-  const userAuth = useAuth();
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -40,13 +38,13 @@ const ProfileMenu = () => {
           color="blue-gray"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 ml-auto lg:ml-2"
         >
-          <small className="mx-2 text-white">Olá, {userAuth?.user.name}</small>
+          <small className="mx-2 text-white">Olá, {user.name}</small>
           <Avatar
             variant="circular"
             size="sm"
             alt="User profile"
             className="border border-gray-200 p-0.5"
-            src={UserProfile}
+            src={user.picture}
           />
           <ChevronDownIcon
             strokeWidth={2.5}
@@ -66,7 +64,7 @@ const ProfileMenu = () => {
             className: "h-4 w-4",
             strokeWidth: 2,
           })}
-          <Link to="/path" replace={true}>
+          <Link to="/home" replace={true}>
             <Typography
               as="span"
               variant="small"
@@ -86,7 +84,7 @@ const ProfileMenu = () => {
             className: "h-4 w-4",
             strokeWidth: 2,
           })}
-          <Link to="/path" replace={true}>
+          <Link to="/home" replace={true}>
             <Typography
               as="span"
               variant="small"
@@ -106,7 +104,7 @@ const ProfileMenu = () => {
             className: "h-4 w-4",
             strokeWidth: 2,
           })}
-          <Link to="/path" replace={true}>
+          <Link to="/home" replace={true}>
             <Typography
               as="span"
               variant="small"
@@ -132,8 +130,10 @@ const ProfileMenu = () => {
             className="font-normal"
             color={"red"}
             onClick={() => {
-              console.log("logout...");
-              userAuth.logOut();
+              console.log("Logout...");
+              logout({
+                logoutParams: { returnTo: `${window.location.origin}/login` },
+              });
             }}
           >
             Sign Out
@@ -197,7 +197,7 @@ const NavbarMenu = () => {
         <Link to="/home" replace={true}>
           <Typography
             as="span"
-            className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+            className="mr-4 ml-2 cursor-pointer py-1.5 font-medium text-sm"
           >
             Crypto Market Analyzer
           </Typography>
