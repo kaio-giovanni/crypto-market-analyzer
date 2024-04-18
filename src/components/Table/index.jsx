@@ -18,71 +18,28 @@ const Table = ({ tableData, headers }) => {
     console.log({ size, page });
   }, [numElements, page, tableData]);
 
-  const pagination = () => {
-    const next = () => {
-      if (page === totalPages) return;
+  const next = () => {
+    if (page === totalPages) return;
 
-      setPage(page + 1);
-    };
+    setPage(page + 1);
+  };
 
-    const prev = () => {
-      if (page === 1) return;
+  const prev = () => {
+    if (page === 1) return;
 
-      setPage(page - 1);
-    };
+    setPage(page - 1);
+  };
 
-    const firstPage = () => {
-      if (page === 1) return;
+  const firstPage = () => {
+    if (page === 1) return;
 
-      setPage(1);
-    };
+    setPage(1);
+  };
 
-    const lastPage = () => {
-      if (page === totalPages) return;
+  const lastPage = () => {
+    if (page === totalPages) return;
 
-      setPage(totalPages);
-    };
-
-    return (
-      <div className="flex items-center justify-center">
-        <Button
-          variant="text"
-          className="flex items-center gap-2 rounded-full"
-          onClick={firstPage}
-          disabled={page === 1}
-        >
-          First
-        </Button>
-        <Button
-          variant="text"
-          className="flex items-center gap-2 rounded-full"
-          onClick={prev}
-          disabled={page === 1}
-        >
-          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-        </Button>
-        <Button
-          variant="text"
-          className="flex items-center gap-2 rounded-full"
-          onClick={next}
-          disabled={page >= totalPages}
-        >
-          Next
-          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="text"
-          className="flex items-center gap-2 rounded-full"
-          onClick={lastPage}
-          disabled={page >= totalPages}
-        >
-          Last
-        </Button>
-        <small className="mx-2 text-black">
-          {page} of {totalPages} pages
-        </small>
-      </div>
-    );
+    setPage(totalPages);
   };
 
   return (
@@ -123,7 +80,44 @@ const Table = ({ tableData, headers }) => {
           </tbody>
         </table>
       </div>
-      {pagination()}
+      <div className="flex items-center justify-center">
+        <Button
+          variant="text"
+          className="flex items-center gap-2 rounded-full"
+          onClick={firstPage}
+          disabled={page === 1}
+        >
+          First
+        </Button>
+        <Button
+          variant="text"
+          className="flex items-center gap-2 rounded-full"
+          onClick={prev}
+          disabled={page === 1}
+        >
+          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+        </Button>
+        <Button
+          variant="text"
+          className="flex items-center gap-2 rounded-full"
+          onClick={next}
+          disabled={page >= totalPages}
+        >
+          Next
+          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="text"
+          className="flex items-center gap-2 rounded-full"
+          onClick={lastPage}
+          disabled={page >= totalPages}
+        >
+          Last
+        </Button>
+        <small className="mx-2 text-black">
+          {page} of {totalPages} pages
+        </small>
+      </div>
     </>
   );
 };
