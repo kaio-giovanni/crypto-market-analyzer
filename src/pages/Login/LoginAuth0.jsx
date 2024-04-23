@@ -10,7 +10,7 @@ const LoginAuth0 = () => {
   return loading ? (
     <Loading />
   ) : (
-    <div className="bg-midnight text-black h-screen overflow-hidden flex items-center justify-center">
+    <div className="bg-indigo-900 text-black h-screen overflow-hidden flex items-center justify-center">
       <div className="bg-white lg:w-6/12 md:7/12 w-8/12 shadow-3xl rounded-xl">
         <div className="bg-blue-gray-600 shadow shadow-gray-200 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full p-4 md:p-8">
           <img src={Logo} alt="logo" className="h-9" />
@@ -21,7 +21,7 @@ const LoginAuth0 = () => {
           </div>
           <button
             onClick={() => loginWithRedirect()}
-            className="bg-midnight text-white from-gray-700 to-gray-900 font-medium p-2 md:p-4 uppercase w-full rounded"
+            className="bg-purple text-white from-gray-700 to-gray-900 font-medium p-2 md:p-4 uppercase w-full rounded"
           >
             Acessar
           </button>

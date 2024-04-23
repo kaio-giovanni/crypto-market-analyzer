@@ -55,7 +55,7 @@ const ProfileMenu = () => {
         </Button>
       </MenuHandler>
 
-      <MenuList className="p-1 bg-midnight text-white">
+      <MenuList className="p-1 bg-indigo-900 border border-solid border-indigo-500 text-white">
         <MenuItem
           onClick={closeMenu}
           className="flex items-center gap-2 rounded"
@@ -187,8 +187,8 @@ const NavbarMenu = () => {
 
   return (
     <Navbar
-      className="text-white mx-auto w-full max-w-none p-2 lg:pl-6 rounded-sm"
-      style={{ backgroundColor: "#121063" }}
+      className="text-white mx-auto w-full max-w-none p-2 lg:pl-6 rounded-none border border-solid border-indigo-500"
+      style={{ backgroundColor: "#1e1b4b" }}
     >
       <div className="relative mx-auto flex items-center justify-items-start">
         <Link to="/home" replace={true}>

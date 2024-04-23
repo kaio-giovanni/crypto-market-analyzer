@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import NavbarMenu from "../../components/NavbarMenu";
 import Private from "../../components/Private";
 import DefaultCard from "../../components/Card";
+import Footer from "../../components/Footer";
 import api from "../../services/http_requests";
+import CoinIcon from "../../assets/bitcoin.jpg";
 
 const Home = () => {
   const exchanges = ["BITSTAMP", "COINBASE", "KRAKEN"];
@@ -36,7 +38,7 @@ const Home = () => {
         );
         prices[exchange] = response.data.rate;
       } catch (error) {
-        console.error(`Error fetching data from ${exchange}, error.message`);
+        console.error(`Error fetching data from ${exchange}`);
       }
     }
     return prices;
@@ -45,11 +47,25 @@ const Home = () => {
   return (
     <Private>
       <NavbarMenu />
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 justify-items-center">
-        {[1, 2, 3, 4, 5].map((item) => (
-          <DefaultCard key={item} />
-        ))}
+      <div className="min-h-screen">
+        <h1 className="m-3 p-2 font-bold">Resultados</h1>
+        <div className="w-full h-full grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-4 gap-x-4 py-2 px-4">
+          {[1, 2, 3, 4, 5, 6].map((item) => (
+            <DefaultCard
+              key={item}
+              coinIcon={CoinIcon}
+              coinName={`Brand ${item}`}
+              fromExchange={"Binance"}
+              toExchange={"KRAKEN"}
+              fromExPrice={"10,67"}
+              toExPrice={"15,89"}
+              spread={"10"}
+              tax={"4"}
+            />
+          ))}
+        </div>
       </div>
+      <Footer />
     </Private>
   );
 };
