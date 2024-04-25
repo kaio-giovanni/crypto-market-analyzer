@@ -1,11 +1,13 @@
 import React from "react";
 
-const Loading = () => {
+const Loading = ({ type = "default" }) => {
+  const classColor = type === "default" ? "fill-blue-600" : `fill-${type}`;
+
   return (
     <div role="status" className="absolute m-5 top-2/4 left-2/4">
       <svg
         aria-hidden="true"
-        className="inline w-28 h-28 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+        className={`inline w-28 h-28 text-gray-200 animate-spin dark:text-gray-600 ${classColor}`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

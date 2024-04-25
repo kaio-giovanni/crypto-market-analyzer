@@ -37,7 +37,7 @@ const ExchangeTable = () => {
     <Private>
       <NavbarMenu />
       {loading ? (
-        <Loading />
+        <Loading type="green-400" />
       ) : (
         <div className="min-h-screen">
           <Table tableData={exchanges} headers={tableHeaders} />

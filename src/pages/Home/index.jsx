@@ -1,70 +1,125 @@
 import React, { useEffect, useState } from "react";
 import NavbarMenu from "../../components/NavbarMenu";
 import Private from "../../components/Private";
+import Loading from "../../components/Loading";
 import DefaultCard from "../../components/Card";
+import MultiSelect from "../../components/MultiSelect";
 import Footer from "../../components/Footer";
 import api from "../../services/http_requests";
 import CoinIcon from "../../assets/bitcoin.jpg";
 
 const Home = () => {
-  const exchanges = ["BITSTAMP", "COINBASE", "KRAKEN"];
-  const [prices, setPrices] = useState({});
+  const [exchanges, setExchanges] = useState([]);
+  const [selectedExchanges, setSelectedExchanges] = useState([]);
+  const [selectedCrypto, setSelectedCrypto] = useState(["BRL", "USDT"]);
+  const [rateByExchanges, setRateByExchanges] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  //   useEffect(() => {
-  //     console.log("Setting data...");
-  //     setData();
-  //   }, []);
-  //
-  //   useEffect(() => {
-  //     console.log("Updating prices...");
-  //     console.table(prices);
-  //   }, [prices]);
+  const x = ["COINBASE", "KRAKEN", "BINANCE"];
 
-  const setData = () => {
-    getCryptoPrices("BTCUSD")
+  useEffect(() => {
+    console.log("Setting data...");
+
+    getExchanges()
       .then((response) => {
-        setPrices(response);
+        setExchanges(response);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+      });
+
+    // getCryptoPrices()
+    //   .then((response) => {
+    //     console.log(response);
+    //     setRateByExchanges(response);
+    //   })
+    //   .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    console.log("Updating prices...");
+    console.log({ selectedExchanges });
+  }, [rateByExchanges, selectedExchanges]);
+
+  const getExchanges = async () => {
+    setLoading(true);
+    const response = await api.get("/v1/exchanges");
+    setLoading(false);
+    return response.data;
   };
 
-  async function getCryptoPrices(symbol) {
+  const getCryptoPrices = async () => {
+    try {
+      setLoading(true);
+      const data = [];
+      data.push(await getCryptoPricesByExchanges("BRL"));
+      data.push(await getCryptoPricesByExchanges("USDT"));
+      return data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getCryptoPricesByExchanges = async (symbol) => {
     const prices = {};
 
-    for (const exchange of exchanges) {
+    setLoading(true);
+    const exc_list = exchanges.slice(0, 6);
+    for (const { exchange_id } of exc_list) {
       try {
         const response = await api.get(
-          `/v1/exchangerate/${symbol}?&exchange=${exchange}`
+          `/v1/exchangerate/${symbol}?&exchange=${exchange_id}`
         );
-        prices[exchange] = response.data.rate;
+        prices[exchange_id] = response.data.rate;
       } catch (error) {
-        console.error(`Error fetching data from ${exchange}`);
+        console.error(`Error fetching data from ${exchange_id}`);
       }
     }
+    setLoading(false);
     return prices;
-  }
+  };
 
   return (
     <Private>
       <NavbarMenu />
-      <div className="min-h-screen">
-        <h1 className="m-3 p-2 font-bold">Resultados</h1>
-        <div className="w-full h-full grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-4 gap-x-4 py-2 px-4">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
-            <DefaultCard
-              key={item}
-              coinIcon={CoinIcon}
-              coinName={`Brand ${item}`}
-              fromExchange={"Binance"}
-              toExchange={"KRAKEN"}
-              fromExPrice={"10,67"}
-              toExPrice={"15,89"}
-              spread={"10"}
-              tax={"4"}
+      {loading ? (
+        <Loading type="green-400" />
+      ) : (
+        <div className="min-h-screen">
+          <div className="w-full px-4 mt-2">
+            <h1 className="text-indigo-800 font-sans font-bold">
+              {selectedExchanges.length < 1
+                ? "Selecionar Exchanges"
+                : "Exchanges selecionadas"}
+            </h1>
+          </div>
+          <div className="w-full px-2 mb-2">
+            <MultiSelect
+              options={exchanges.map(({ exchange_id }) => exchange_id)}
+              selectedItems={selectedExchanges}
+              setSelectedItems={setSelectedExchanges}
             />
-          ))}
+          </div>
+          <div className="w-full h-full grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-4 gap-x-4 py-2 px-4">
+            {[1].map((item) => (
+              <DefaultCard
+                key={item}
+                coinIcon={CoinIcon}
+                coinName={`Brand ${item}`}
+                fromExchange={"Binance"}
+                toExchange={"KRAKEN"}
+                fromExPrice={"10,67"}
+                toExPrice={"15,89"}
+                spread={"10"}
+                tax={"4"}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <Footer />
     </Private>
   );
