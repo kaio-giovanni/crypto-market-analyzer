@@ -8,15 +8,9 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
     setToggleDropdown(!toggleDropdown);
   };
 
-  const onSelectItem = (value) => {
-    const selected = selectedItems;
-    selected.push(value);
-    setSelectedItems(selected);
-  };
-
   const onSelectItemBtn = (ev, item) => {
     setDisabledBtn({ ...disabledBtn, [item]: true });
-    onSelectItem(item);
+    setSelectedItems((prevState) => [...prevState, item]);
   };
 
   const onRemoveSelectedItem = (ev, item) => {
@@ -26,13 +20,11 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
     setSelectedItems(new_data_list);
   };
 
-  useEffect(() => {
-    console.log({ selectedItems });
-  }, [options, selectedItems]);
+  useEffect(() => {}, [options, selectedItems]);
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap justify-evenly p-2 max-w-full">
+      <div className="flex flex-wrap p-2 max-w-full">
         {selectedItems.map((item, index) => (
           <div
             key={index}

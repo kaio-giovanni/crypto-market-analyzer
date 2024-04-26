@@ -48,6 +48,7 @@ const ProfileMenu = () => {
           />
           <ChevronDownIcon
             strokeWidth={2.5}
+            color="white"
             className={`h-3 w-3 transition-transform ${
               isMenuOpen ? "rotate-180" : ""
             }`}
@@ -208,7 +209,7 @@ const NavbarMenu = () => {
         <ProfileMenu />
         <IconButton
           size="sm"
-          color="blue-gray"
+          color="white"
           variant="text"
           onClick={toggleIsNavOpen}
           className="mr-2 lg:hidden"

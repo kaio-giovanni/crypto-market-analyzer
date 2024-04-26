@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "@material-tailwind/react";
 import NavbarMenu from "../../components/NavbarMenu";
 import Private from "../../components/Private";
 import Loading from "../../components/Loading";
@@ -14,8 +15,6 @@ const Home = () => {
   const [selectedCrypto, setSelectedCrypto] = useState(["BRL", "USDT"]);
   const [rateByExchanges, setRateByExchanges] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const x = ["COINBASE", "KRAKEN", "BINANCE"];
 
   useEffect(() => {
     console.log("Setting data...");
@@ -67,15 +66,14 @@ const Home = () => {
     const prices = {};
 
     setLoading(true);
-    const exc_list = exchanges.slice(0, 6);
-    for (const { exchange_id } of exc_list) {
+    for (const exchange of selectedExchanges) {
       try {
         const response = await api.get(
-          `/v1/exchangerate/${symbol}?&exchange=${exchange_id}`
+          `/v1/exchangerate/${symbol}?&exchange=${exchange}`
         );
-        prices[exchange_id] = response.data.rate;
+        prices[exchange] = response.data.rate;
       } catch (error) {
-        console.error(`Error fetching data from ${exchange_id}`);
+        console.error(`Error fetching data from ${exchange}`);
       }
     }
     setLoading(false);
@@ -103,8 +101,18 @@ const Home = () => {
               setSelectedItems={setSelectedExchanges}
             />
           </div>
+          <div className="w-full h-14 p-2 flex flex-wrap">
+            <div className="ml-auto">
+              <Button
+                variant="outlined"
+                className="flex items-center justify-center bg-indigo-900 w-full hover:bg-midnight text-white"
+              >
+                Aplicar
+              </Button>
+            </div>
+          </div>
           <div className="w-full h-full grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-4 gap-x-4 py-2 px-4">
-            {[1].map((item) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
               <DefaultCard
                 key={item}
                 coinIcon={CoinIcon}
