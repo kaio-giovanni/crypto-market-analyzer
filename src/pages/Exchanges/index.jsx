@@ -3,6 +3,7 @@ import NavbarMenu from "../../components/NavbarMenu";
 import Private from "../../components/Private";
 import Table from "../../components/Table";
 import Loading from "../../components/Loading";
+import Footer from "../../components/Footer";
 import api from "../../services/http_requests";
 
 const ExchangeTable = () => {
@@ -36,10 +37,13 @@ const ExchangeTable = () => {
     <Private>
       <NavbarMenu />
       {loading ? (
-        <Loading />
+        <Loading type="green-400" />
       ) : (
-        <Table tableData={exchanges} headers={tableHeaders} />
+        <div className="min-h-screen">
+          <Table tableData={exchanges} headers={tableHeaders} />
+        </div>
       )}
+      <Footer />
     </Private>
   );
 };

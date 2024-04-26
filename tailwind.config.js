@@ -1,6 +1,6 @@
 const withMT = require("@material-tailwind/react/utils/withMT");
 module.exports = withMT({
-  content: ["./src/**/*.jsx"],
+  content: ["./index.html", "./src/**/*.jsx"],
   theme: {
     colors: {
       white: "#ffffff",
@@ -11,9 +11,19 @@ module.exports = withMT({
       silver: "#ecebff",
       "bubble-gum": "#ff77e9",
       bermuda: "#78dcca",
-      gray: "#030712",
+      gray: "#18181b",
     },
-    extend: {},
+    extend: {
+      colors: {
+        brand: {
+          300: "#996DFF",
+          500: "#8257e6",
+        },
+        indigo: {
+          900: "#1e1b4b",
+        },
+      },
+    },
   },
   plugins: [],
 });
