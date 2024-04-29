@@ -20,24 +20,15 @@ const AuthProvider = ({ children }) => {
 
   const loginAction = async (data) => {
     try {
-      // const response = await fetch("your-api-endpoint/auth/login", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(data),
-      // });
-      // const res = await response.json();
-      const res = {
-        data: {
-          user: {
-            name: "Kaio",
-            email: "kaio.giovanni@hotmail.com",
-          },
+      const response = await fetch("your-api-endpoint/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        token: "ASDKAJSDKAJSDKASJD",
-      };
+        body: JSON.stringify(data),
+      });
 
+      const res = await response.json();
       if (res.data) {
         setUser(res.data.user);
         setToken(res.token);

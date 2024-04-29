@@ -7,6 +7,7 @@ import DefaultCard from "../../components/Card";
 import MultiSelect from "../../components/MultiSelect";
 import Footer from "../../components/Footer";
 import api from "../../services/http_requests";
+import { coinApiWsUrl, coinApiKey } from "../../utils/dotenv";
 import CoinIcon from "../../assets/bitcoin.jpg";
 
 const Home = () => {
@@ -14,7 +15,58 @@ const Home = () => {
   const [selectedExchanges, setSelectedExchanges] = useState([]);
   const [selectedCrypto, setSelectedCrypto] = useState(["BRL", "USDT"]);
   const [rateByExchanges, setRateByExchanges] = useState([]);
+  const [wsClient, setWsClient] = useState(null);
+  const [reconnectWs, setReconnectWs] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const initialWebSocketMessage = {
+    type: "hello",
+    apikey: coinApiKey,
+    heartbeat: false,
+    subscribe_data_type: ["trade", "quote"],
+    subscribe_filter_exchange_id: selectedExchanges,
+    subscribe_filter_asset_id: ["BTC"],
+  };
+
+  useEffect(() => {
+    setWsClient((current) => {
+      console.log(`Current WS connection: ${current}`);
+      return new WebSocket(coinApiWsUrl);
+    });
+
+    console.log(`WS connection: ${wsClient}`);
+
+    return () => {
+      if (wsClient && wsClient.readyState == wsClient.OPEN) {
+        wsClient.close();
+        setWsClient(null);
+      }
+    };
+  }, [reconnectWs]);
+
+  useEffect(() => {
+    console.log("Setting websocket events");
+    if (wsClient) {
+      wsClient.onopen = () => {
+        console.log("WS On Open");
+      };
+
+      wsClient.onmessage = (message) => {
+        console.log(`New Message Received: ${JSON.stringify(message)}`);
+      };
+
+      wsClient.onclose = (event) => {
+        console.log(
+          `WebSocket Connection Closed: Reason ${JSON.stringify(event)}`
+        );
+        setReconnectWs((previous) => !previous);
+      };
+
+      wsClient.onerror = (error) => {
+        console.error(`WebSocket Error: ${error}`);
+      };
+    }
+  }, [wsClient]);
 
   useEffect(() => {
     console.log("Setting data...");
@@ -37,8 +89,17 @@ const Home = () => {
 
   useEffect(() => {
     console.log("Updating prices...");
-    console.log({ selectedExchanges });
   }, [rateByExchanges, selectedExchanges]);
+
+  const sendWsMessage = (message) => {
+    if (wsClient.readyState == wsClient.OPEN) {
+      console.log(`Sending Subscribe Message: ${JSON.stringify(message)}`);
+      wsClient.send(JSON.stringify(message));
+    }
+  };
+  const subscribeCoinApiWs = () => {
+    sendWsMessage(initialWebSocketMessage);
+  };
 
   const getExchanges = async () => {
     setLoading(true);
@@ -104,6 +165,8 @@ const Home = () => {
           <div className="w-full h-14 p-2 flex flex-wrap">
             <div className="ml-auto">
               <Button
+                disabled={true}
+                onClick={() => subscribeCoinApiWs()}
                 variant="outlined"
                 className="flex items-center justify-center bg-indigo-900 w-full hover:bg-midnight text-white"
               >

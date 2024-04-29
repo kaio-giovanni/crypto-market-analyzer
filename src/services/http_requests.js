@@ -1,9 +1,10 @@
 import axios from "axios";
+import { coinApiBaseUrl, coinApiKey } from "../utils/dotenv";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_COIN_API_BASE_URL,
+  baseURL: coinApiBaseUrl,
   headers: {
-    "X-CoinAPI-Key": import.meta.env.VITE_COIN_API_KEY,
+    "X-CoinAPI-Key": coinApiKey,
   },
 });
 
