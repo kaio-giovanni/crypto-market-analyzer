@@ -4,7 +4,7 @@ import Private from "../../components/Private";
 import Table from "../../components/Table";
 import Loading from "../../components/Loading";
 import Footer from "../../components/Footer";
-import api from "../../services/http_requests";
+import { coinApi } from "../../services/http_requests";
 
 const ExchangeTable = () => {
   const [exchanges, setExchanges] = useState([]);
@@ -19,7 +19,7 @@ const ExchangeTable = () => {
 
   useEffect(() => {
     setLoading(true);
-    api
+    coinApi
       .get("/v1/exchanges")
       .then((response) => {
         const data = response.data;

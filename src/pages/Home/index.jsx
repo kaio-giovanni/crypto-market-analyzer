@@ -6,7 +6,7 @@ import Loading from "../../components/Loading";
 import DefaultCard from "../../components/Card";
 import MultiSelect from "../../components/MultiSelect";
 import Footer from "../../components/Footer";
-import api from "../../services/http_requests";
+import { coinApi } from "../../services/http_requests";
 import { coinApiWsUrl, coinApiKey } from "../../utils/dotenv";
 import CoinIcon from "../../assets/bitcoin.jpg";
 
@@ -103,7 +103,7 @@ const Home = () => {
 
   const getExchanges = async () => {
     setLoading(true);
-    const response = await api.get("/v1/exchanges");
+    const response = await coinApi.get("/v1/exchanges");
     setLoading(false);
     return response.data;
   };
@@ -129,7 +129,7 @@ const Home = () => {
     setLoading(true);
     for (const exchange of selectedExchanges) {
       try {
-        const response = await api.get(
+        const response = await coinApi.get(
           `/v1/exchangerate/${symbol}?&exchange=${exchange}`
         );
         prices[exchange] = response.data.rate;
