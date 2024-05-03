@@ -23,12 +23,12 @@ const AuthProvider = ({ children }) => {
       const response = await fetch("your-api-endpoint/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       });
 
-      const response = await response.json();
+      const res = await response.json();
       if (res.data) {
         setUser(res.data.user);
         setToken(res.token);
