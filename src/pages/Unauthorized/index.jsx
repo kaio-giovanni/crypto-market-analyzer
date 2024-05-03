@@ -14,9 +14,7 @@ const Unauthorized = () => {
   return (
     <div className="bg-midnight text-white text-center py-20 h-screen w-full">
       <h1 className="mb-4 text-6xl font-semibold text-red-500">403</h1>
-      <p className="mb-4 text-lg text-gray-600">
-        Oops! Voce não tem acesso a essa página!
-      </p>
+      <p className="mb-4 text-lg text-gray-600">Oops! Voce não tem acesso a essa página!</p>
       <div className="animate-bounce">
         <svg
           className="mx-auto h-16 w-16 text-red-500"

@@ -9,24 +9,19 @@ const DefaultCard = ({
   fromExPrice,
   toExPrice,
   spread,
-  tax,
+  tax
 }) => {
   return (
     <div className="w-full h-80 p-2 bg-white text-blue-gray-800 shadow-md rounded-xl duration-500 hover:shadow-2xl text-sm">
       <div className="h-full">
         <div className="flex flex-wrap">
           <img src={coinIcon} alt="coin" className="h-12 w-12 my-auto" />
-          <span className="text-indigo-900 font-sans font-bold my-auto uppercase ">
-            {coinName}
-          </span>
+          <span className="text-indigo-900 font-sans font-bold my-auto uppercase ">{coinName}</span>
         </div>
         <hr className="text-blue-gray-200" />
         <div className="grid grid-cols-3 w-full pt-2">
           <div className="block">
-            <Typography
-              variant="small"
-              className="font-bold mr-2 text-blue-gray-300 text-left"
-            >
+            <Typography variant="small" className="font-bold mr-2 text-blue-gray-300 text-left">
               Compra
             </Typography>
             <div className="flex flex-wrap my-4">
@@ -47,10 +42,7 @@ const DefaultCard = ({
               </Typography>
             </div>
             <div className="text-left my-2">
-              <Typography
-                variant="small"
-                className="text-indigo-900 font-sans font-bold"
-              >
+              <Typography variant="small" className="text-indigo-900 font-sans font-bold">
                 ${fromExPrice}
               </Typography>
             </div>
@@ -64,25 +56,16 @@ const DefaultCard = ({
               stroke="currentColor"
               className="w-8 h-8"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m8.25 4.5 7.5 7.5-7.5 7.5"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
             </svg>
           </div>
           <div className="block">
-            <Typography
-              variant="small"
-              className="font-bold mr-2 text-blue-gray-300 text-right"
-            >
+            <Typography variant="small" className="font-bold mr-2 text-blue-gray-300 text-right">
               Venda
             </Typography>
             <div className="flex flex-wrap my-4 text-right justify-end">
               <img
-                src={
-                  "https://logos-world.net/wp-content/uploads/2021/02/Kraken-Logo.png"
-                }
+                src={"https://logos-world.net/wp-content/uploads/2021/02/Kraken-Logo.png"}
                 width={40}
                 height={40}
                 alt="coin"
@@ -96,10 +79,7 @@ const DefaultCard = ({
               </Typography>
             </div>
             <div className="text-right my-2">
-              <Typography
-                variant="small"
-                className="text-indigo-900 font-sans font-bold"
-              >
+              <Typography variant="small" className="text-indigo-900 font-sans font-bold">
                 ${toExPrice}
               </Typography>
             </div>
@@ -109,10 +89,7 @@ const DefaultCard = ({
         <div className="p-2">
           <div className="grid grid-cols-2 w-full mb-2">
             <div className="block">
-              <Typography
-                variant="small"
-                className="font-bold text-blue-gray-300 text-left"
-              >
+              <Typography variant="small" className="font-bold text-blue-gray-300 text-left">
                 SPREAD
               </Typography>
               <div className="flex flex-wrap">
@@ -125,10 +102,7 @@ const DefaultCard = ({
               </div>
             </div>
             <div className="block">
-              <Typography
-                variant="small"
-                className="font-bold text-blue-gray-300 text-right"
-              >
+              <Typography variant="small" className="font-bold text-blue-gray-300 text-right">
                 TAXAS
               </Typography>
               <div className="flex flex-wrap text-right justify-end">
