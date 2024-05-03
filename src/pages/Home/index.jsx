@@ -25,7 +25,7 @@ const Home = () => {
     heartbeat: false,
     subscribe_data_type: ["trade", "quote"],
     subscribe_filter_exchange_id: selectedExchanges,
-    subscribe_filter_asset_id: ["BTC"],
+    subscribe_filter_asset_id: ["BTC"]
   };
 
   useEffect(() => {
@@ -56,9 +56,7 @@ const Home = () => {
       };
 
       wsClient.onclose = (event) => {
-        console.log(
-          `WebSocket Connection Closed: Reason ${JSON.stringify(event)}`
-        );
+        console.log(`WebSocket Connection Closed: Reason ${JSON.stringify(event)}`);
         setReconnectWs((previous) => !previous);
       };
 
@@ -129,9 +127,7 @@ const Home = () => {
     setLoading(true);
     for (const exchange of selectedExchanges) {
       try {
-        const response = await coinApi.get(
-          `/v1/exchangerate/${symbol}?&exchange=${exchange}`
-        );
+        const response = await coinApi.get(`/v1/exchangerate/${symbol}?&exchange=${exchange}`);
         prices[exchange] = response.data.rate;
       } catch (error) {
         console.error(`Error fetching data from ${exchange}`);

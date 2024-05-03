@@ -4,8 +4,8 @@ import { coinApiBaseUrl, coinApiKey } from "../utils/dotenv";
 export const coinApi = axios.create({
   baseURL: coinApiBaseUrl,
   headers: {
-    "X-CoinAPI-Key": coinApiKey,
-  },
+    "X-CoinAPI-Key": coinApiKey
+  }
 });
 
 export const binanceApi = axios.create({});
