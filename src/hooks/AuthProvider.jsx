@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
         body: JSON.stringify(data),
       });
 
-      const res = await response.json();
+      const response = await response.json();
       if (res.data) {
         setUser(res.data.user);
         setToken(res.token);
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
           "userData",
           JSON.stringify({
             user: res.data.user,
-            token: res.token,
+            token: res.token
           })
         );
         navigate("/home");

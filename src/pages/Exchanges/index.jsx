@@ -14,7 +14,7 @@ const ExchangeTable = () => {
     { headerName: "Exchange", headerId: "exchange_id" },
     { headerName: "Website", headerId: "website" },
     { headerName: "N. Crypto", headerId: "data_symbols_count" },
-    { headerName: "VOLUME USD DAY", headerId: "volume_1day_usd" },
+    { headerName: "VOLUME USD DAY", headerId: "volume_1day_usd" }
   ];
 
   useEffect(() => {

@@ -17,7 +17,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const handleSubmitEvent = (e) => {
@@ -37,7 +37,7 @@ const Login = () => {
     const { name, value } = e.target;
     setInput((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 

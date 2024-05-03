@@ -150,9 +150,7 @@ const Home = () => {
         <div className="min-h-screen">
           <div className="w-full px-4 mt-2">
             <h1 className="text-indigo-800 font-sans font-bold">
-              {selectedExchanges.length < 1
-                ? "Selecionar Exchanges"
-                : "Exchanges selecionadas"}
+              {selectedExchanges.length < 1 ? "Selecionar Exchanges" : "Exchanges selecionadas"}
             </h1>
           </div>
           <div className="w-full px-2 mb-2">

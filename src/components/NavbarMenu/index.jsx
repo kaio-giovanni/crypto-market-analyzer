@@ -10,7 +10,7 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Collapse,
+  Collapse
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -19,7 +19,7 @@ import {
   InboxArrowDownIcon,
   PowerIcon,
   Bars2Icon,
-  CodeBracketSquareIcon,
+  CodeBracketSquareIcon
 } from "@heroicons/react/24/solid";
 import { useAuth0 } from "@auth0/auth0-react";
 import Logo from "../../assets/logo.png";
@@ -49,81 +49,52 @@ const ProfileMenu = () => {
           <ChevronDownIcon
             strokeWidth={2.5}
             color="white"
-            className={`h-3 w-3 transition-transform ${
-              isMenuOpen ? "rotate-180" : ""
-            }`}
+            className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""}`}
           />
         </Button>
       </MenuHandler>
 
       <MenuList className="p-1 bg-indigo-900 border border-solid border-indigo-500 text-white">
-        <MenuItem
-          onClick={closeMenu}
-          className="flex items-center gap-2 rounded"
-        >
+        <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded">
           {createElement(UserCircleIcon, {
             className: "h-4 w-4",
-            strokeWidth: 2,
+            strokeWidth: 2
           })}
           <Link to="/home" replace={true}>
-            <Typography
-              as="span"
-              variant="small"
-              className="font-normal"
-              color={"inherit"}
-            >
+            <Typography as="span" variant="small" className="font-normal" color={"inherit"}>
               My Profile
             </Typography>
           </Link>
         </MenuItem>
 
-        <MenuItem
-          onClick={closeMenu}
-          className="flex items-center gap-2 rounded"
-        >
+        <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded">
           {createElement(Cog6ToothIcon, {
             className: "h-4 w-4",
-            strokeWidth: 2,
+            strokeWidth: 2
           })}
           <Link to="/home" replace={true}>
-            <Typography
-              as="span"
-              variant="small"
-              className="font-normal"
-              color={"inherit"}
-            >
+            <Typography as="span" variant="small" className="font-normal" color={"inherit"}>
               Edit
             </Typography>
           </Link>
         </MenuItem>
 
-        <MenuItem
-          onClick={closeMenu}
-          className="flex items-center gap-2 rounded"
-        >
+        <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded">
           {createElement(InboxArrowDownIcon, {
             className: "h-4 w-4",
-            strokeWidth: 2,
+            strokeWidth: 2
           })}
           <Link to="/home" replace={true}>
-            <Typography
-              as="span"
-              variant="small"
-              className="font-normal"
-              color={"inherit"}
-            >
+            <Typography as="span" variant="small" className="font-normal" color={"inherit"}>
               Inbox
             </Typography>
           </Link>
         </MenuItem>
 
-        <MenuItem
-          onClick={closeMenu}
-          className="flex items-center gap-2 rounded "
-        >
+        <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded ">
           {createElement(PowerIcon, {
             className: "h-4 w-4 text-red-500",
-            strokeWidth: 2,
+            strokeWidth: 2
           })}
           <Typography
             as="span"
@@ -133,7 +104,7 @@ const ProfileMenu = () => {
             onClick={() => {
               console.log("Logout...");
               logout({
-                logoutParams: { returnTo: `${window.location.origin}/login` },
+                logoutParams: { returnTo: `${window.location.origin}/login` }
               });
             }}
           >
@@ -148,8 +119,8 @@ const ProfileMenu = () => {
 const navListItems = [
   {
     label: "Exchanges",
-    icon: CodeBracketSquareIcon,
-  },
+    icon: CodeBracketSquareIcon
+  }
 ];
 
 const NavList = () => {
@@ -157,12 +128,7 @@ const NavList = () => {
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       {navListItems.map(({ label, icon }, key) => (
         <Link to="/exchanges" replace={true} key={key}>
-          <Typography
-            as="span"
-            variant="small"
-            color="gray"
-            className="font-medium text-white"
-          >
+          <Typography as="span" variant="small" color="gray" className="font-medium text-white">
             <MenuItem className="flex items-center gap-2 lg:rounded-full text-xs">
               {createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
               <span className="text-white">{label}</span>
@@ -180,10 +146,7 @@ const NavbarMenu = () => {
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
   useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setIsNavOpen(false)
-    );
+    window.addEventListener("resize", () => window.innerWidth >= 960 && setIsNavOpen(false));
   }, []);
 
   return (
@@ -196,10 +159,7 @@ const NavbarMenu = () => {
           <img src={Logo} alt="logo" className="h-9" />
         </Link>
         <Link to="/home" replace={true}>
-          <Typography
-            as="span"
-            className="mr-4 ml-2 cursor-pointer py-1.5 font-medium text-sm"
-          >
+          <Typography as="span" className="mr-4 ml-2 cursor-pointer py-1.5 font-medium text-sm">
             Crypto Market Analyzer
           </Typography>
         </Link>

@@ -16,7 +16,7 @@ function App() {
         domain={auth0Domain}
         clientId={authClientId}
         authorizationParams={{
-          redirect_uri: window.location.origin,
+          redirect_uri: window.location.origin
         }}
       >
         <Routes>
