@@ -30,9 +30,7 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
             key={index}
             className="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-full text-indigo-800 bg-indigo-100 border border-indigo-300"
           >
-            <div className="text-xs font-normal leading-none max-w-full flex-initial">
-              {item}
-            </div>
+            <div className="text-xs font-normal leading-none max-w-full flex-initial">{item}</div>
             <div className="flex flex-auto flex-row-reverse">
               <button onClick={(ev) => onRemoveSelectedItem(ev, item)}>
                 <svg

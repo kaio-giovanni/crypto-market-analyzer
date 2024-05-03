@@ -11,19 +11,19 @@ module.exports = withMT({
       silver: "#ecebff",
       "bubble-gum": "#ff77e9",
       bermuda: "#78dcca",
-      gray: "#18181b",
+      gray: "#18181b"
     },
     extend: {
       colors: {
         brand: {
           300: "#996DFF",
-          500: "#8257e6",
+          500: "#8257e6"
         },
         indigo: {
-          900: "#1e1b4b",
-        },
-      },
-    },
+          900: "#1e1b4b"
+        }
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 });

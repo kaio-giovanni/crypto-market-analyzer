@@ -68,9 +68,7 @@ const Home = () => {
     setLoading(true);
     for (const exchange of selectedExchanges) {
       try {
-        const response = await api.get(
-          `/v1/exchangerate/${symbol}?&exchange=${exchange}`
-        );
+        const response = await api.get(`/v1/exchangerate/${symbol}?&exchange=${exchange}`);
         prices[exchange] = response.data.rate;
       } catch (error) {
         console.error(`Error fetching data from ${exchange}`);
@@ -89,9 +87,7 @@ const Home = () => {
         <div className="min-h-screen">
           <div className="w-full px-4 mt-2">
             <h1 className="text-indigo-800 font-sans font-bold">
-              {selectedExchanges.length < 1
-                ? "Selecionar Exchanges"
-                : "Exchanges selecionadas"}
+              {selectedExchanges.length < 1 ? "Selecionar Exchanges" : "Exchanges selecionadas"}
             </h1>
           </div>
           <div className="w-full px-2 mb-2">

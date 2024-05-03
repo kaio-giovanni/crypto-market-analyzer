@@ -32,10 +32,10 @@ const AuthProvider = ({ children }) => {
         data: {
           user: {
             name: "Kaio",
-            email: "kaio.giovanni@hotmail.com",
-          },
+            email: "kaio.giovanni@hotmail.com"
+          }
         },
-        token: "ASDKAJSDKAJSDKASJD",
+        token: "ASDKAJSDKAJSDKASJD"
       };
 
       if (res.data) {
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
           "userData",
           JSON.stringify({
             user: res.data.user,
-            token: res.token,
+            token: res.token
           })
         );
         navigate("/home");
