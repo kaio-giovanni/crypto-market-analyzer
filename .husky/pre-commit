@@ -1,1 +1,1 @@
-yarn run format && git add .
+yarn run format
