@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Tooltip } from "@material-tailwind/react";
 
-const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
+const MultiSelect = ({ options, selectedItems, inputPlaceHolder, setSelectedItems }) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const [disabledBtn, setDisabledBtn] = useState({});
+  const btnRemoveItemProps = {
+    disabled: true,
+    tooltip: "Item removal not allowed"
+  };
 
   const toggleDropdownBtn = () => {
     setToggleDropdown(!toggleDropdown);
@@ -20,7 +26,17 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
     setSelectedItems(new_data_list);
   };
 
-  useEffect(() => {}, [options, selectedItems]);
+  useEffect(() => {
+    setDisabledBtn((prevState) => {
+      const newObj = {};
+      for (const item of selectedItems) {
+        newObj[item] = true;
+      }
+      const result = { ...prevState, ...newObj };
+      console.log(result);
+      return result;
+    });
+  }, [options, selectedItems]);
 
   return (
     <div className="w-full">
@@ -32,23 +48,34 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
           >
             <div className="text-xs font-normal leading-none max-w-full flex-initial">{item}</div>
             <div className="flex flex-auto flex-row-reverse">
-              <button onClick={(ev) => onRemoveSelectedItem(ev, item)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="100%"
-                  height="100%"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-x hover:text-indigo-300 rounded-full w-4 h-4 ml-2"
+              <Tooltip
+                content={btnRemoveItemProps.tooltip}
+                animate={{
+                  mount: { scale: 1, y: 0 },
+                  unmount: { scale: 0, y: 25 }
+                }}
+              >
+                <button
+                  disabled={btnRemoveItemProps.disabled || false}
+                  onClick={(ev) => onRemoveSelectedItem(ev, item)}
                 >
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    height="100%"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-x hover:text-indigo-300 rounded-full w-4 h-4 ml-2"
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </Tooltip>
             </div>
           </div>
         ))}
@@ -61,7 +88,7 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
                 <div className="flex-1">
                   <input
                     disabled
-                    placeholder="Exchanges"
+                    placeholder={inputPlaceHolder}
                     className="bg-transparent text-indigo-900 font-sans p-1 px-2 appearance-none outline-none h-full w-full"
                   />
                 </div>
@@ -90,7 +117,7 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
             <div
               className={`${
                 toggleDropdown ? "" : "hidden"
-              } h-40 w-full shadow top-100 bg-white z-40 lef-0 rounded max-h-select overflow-y-auto`}
+              } max-h-40 pb-2 w-full shadow top-100 bg-white z-40 lef-0 rounded max-h-select overflow-y-auto`}
             >
               <div className="flex flex-col w-full">
                 {options.map((item, index) => (
@@ -116,6 +143,13 @@ const MultiSelect = ({ options, selectedItems, setSelectedItems }) => {
       </div>
     </div>
   );
+};
+
+MultiSelect.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+  inputPlaceHolder: PropTypes.string.isRequired,
+  setSelectedItems: PropTypes.func.isRequired
 };
 
 export default MultiSelect;

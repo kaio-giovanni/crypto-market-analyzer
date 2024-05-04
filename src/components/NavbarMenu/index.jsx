@@ -22,7 +22,7 @@ import {
   CodeBracketSquareIcon
 } from "@heroicons/react/24/solid";
 import { useAuth0 } from "@auth0/auth0-react";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo2.png";
 
 const ProfileMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +38,7 @@ const ProfileMenu = () => {
           color="blue-gray"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 ml-auto lg:ml-2"
         >
-          <small className="mx-2 text-white">Olá, {user.name}</small>
+          <small className="mx-2 text-white">Hi, {user.name}</small>
           <Avatar
             variant="circular"
             size="sm"
@@ -74,7 +74,7 @@ const ProfileMenu = () => {
           })}
           <Link to="/home" replace={true}>
             <Typography as="span" variant="small" className="font-normal" color={"inherit"}>
-              Edit
+              Settings
             </Typography>
           </Link>
         </MenuItem>

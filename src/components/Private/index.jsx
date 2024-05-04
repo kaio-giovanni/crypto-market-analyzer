@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import PropTypes from "prop-types";
 import Loading from "../Loading";
 
 const Private = (props) => {
@@ -19,6 +20,10 @@ const Private = (props) => {
   } else {
     return <Navigate to="/unauthorized" />;
   }
+};
+
+Private.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element)
 };
 
 export default Private;

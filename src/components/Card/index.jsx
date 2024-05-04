@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button, Typography } from "@material-tailwind/react";
 
 const DefaultCard = ({
@@ -22,7 +23,7 @@ const DefaultCard = ({
         <div className="grid grid-cols-3 w-full pt-2">
           <div className="block">
             <Typography variant="small" className="font-bold mr-2 text-blue-gray-300 text-left">
-              Compra
+              Purchase
             </Typography>
             <div className="flex flex-wrap my-4">
               <img
@@ -54,14 +55,13 @@ const DefaultCard = ({
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-8 h-8"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
             </svg>
           </div>
           <div className="block">
             <Typography variant="small" className="font-bold mr-2 text-blue-gray-300 text-right">
-              Venda
+              Sell
             </Typography>
             <div className="flex flex-wrap my-4 text-right justify-end">
               <img
@@ -103,7 +103,7 @@ const DefaultCard = ({
             </div>
             <div className="block">
               <Typography variant="small" className="font-bold text-blue-gray-300 text-right">
-                TAXAS
+                TAX
               </Typography>
               <div className="flex flex-wrap text-right justify-end">
                 <Typography
@@ -119,12 +119,23 @@ const DefaultCard = ({
             variant="outlined"
             className="flex items-center justify-center gap-2 bg-indigo-900 w-full hover:bg-midnight text-white"
           >
-            Comprar
+            Order book
           </Button>
         </div>
       </div>
     </div>
   );
+};
+
+DefaultCard.propTypes = {
+  coinIcon: PropTypes.string.isRequired,
+  coinName: PropTypes.string.isRequired,
+  fromExchange: PropTypes.string.isRequired,
+  toExchange: PropTypes.string.isRequired,
+  fromExPrice: PropTypes.string.isRequired,
+  toExPrice: PropTypes.string.isRequired,
+  spread: PropTypes.string.isRequired,
+  tax: PropTypes.string.isRequired
 };
 
 export default DefaultCard;
