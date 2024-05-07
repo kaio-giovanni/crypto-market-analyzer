@@ -10,7 +10,7 @@ const DefaultCard = ({
   fromExPrice,
   toExPrice,
   spread,
-  tax
+  tax,
 }) => {
   return (
     <div className="w-full h-80 p-2 bg-white text-blue-gray-800 shadow-md rounded-xl duration-500 hover:shadow-2xl text-sm">
@@ -135,7 +135,7 @@ DefaultCard.propTypes = {
   fromExPrice: PropTypes.string.isRequired,
   toExPrice: PropTypes.string.isRequired,
   spread: PropTypes.string.isRequired,
-  tax: PropTypes.string.isRequired
+  tax: PropTypes.string.isRequired,
 };
 
 export default DefaultCard;

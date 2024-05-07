@@ -127,10 +127,10 @@ Table.propTypes = {
   headers: PropTypes.arrayOf(
     PropTypes.shape({
       headerName: PropTypes.string.isRequired,
-      headerId: PropTypes.string.isRequired
-    })
+      headerId: PropTypes.string.isRequired,
+    }),
   ),
-  tableData: PropTypes.arrayOf(PropTypes.object.isRequired)
+  tableData: PropTypes.arrayOf(PropTypes.object.isRequired),
 };
 
 export default Table;

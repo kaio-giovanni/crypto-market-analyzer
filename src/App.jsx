@@ -7,6 +7,7 @@ import Exchanges from "./pages/Exchanges";
 import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 import { auth0Domain, authClientId } from "./utils/dotenv";
+import "react-toastify/dist/ReactToastify.css";
 import "./global.css";
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         domain={auth0Domain}
         clientId={authClientId}
         authorizationParams={{
-          redirect_uri: window.location.origin
+          redirect_uri: window.location.origin,
         }}
       >
         <Routes>

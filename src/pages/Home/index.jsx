@@ -1,20 +1,148 @@
 import React, { useEffect, useState } from "react";
 import { Button, Tooltip } from "@material-tailwind/react";
+import { v4 as uuid } from "uuid";
+import { toast, ToastContainer } from "react-toastify";
 import NavbarMenu from "../../components/NavbarMenu";
 import Private from "../../components/Private";
 import Loading from "../../components/Loading";
 import DefaultCard from "../../components/Card";
 import MultiSelect from "../../components/MultiSelect";
 import Footer from "../../components/Footer";
-import { coinApi } from "../../services/http_requests";
+import { binanceApi } from "../../services/http_client";
+import { binanceApiWsBaseUrl } from "../../utils/dotenv";
 import CoinIcon from "../../assets/bitcoin.jpg";
 
 const Home = () => {
   const [exchanges] = useState(["BINANCE", "MERCADO BITCOIN"]);
   const [selectedExchanges, setSelectedExchanges] = useState(exchanges);
   const [selectedCrypto, setSelectedCrypto] = useState(["BRL", "USDT"]);
+  const [binanceSymbols, setBinanceSymbols] = useState([]);
+  const [binanceWsClient, setBinanceWsClient] = useState(null);
+  const [reconnectBinanceWs, setReconnectBinanceWs] = useState(false);
   const [rateByExchanges, setRateByExchanges] = useState([]);
   const [loading, setLoading] = useState(false);
+  const binanceWsId = uuid();
+
+  const getBinancePairs = async () => {
+    const response = await binanceApi.get("/api/v3/exchangeInfo");
+
+    const bnbSymbols = response.data.symbols
+      .filter((d) => d.status === "TRADING")
+      .map(({ baseAsset, quoteAsset, symbol }) => {
+        return { baseAsset, quoteAsset, symbol };
+      });
+
+    return bnbSymbols;
+  };
+
+  const getBinanceTickerPrices = async () => {
+    const binanceAssets = await getBinancePairs();
+    const response = await binanceApi.get("/api/v3/ticker/24hr");
+    for (const {
+      symbol,
+      lastPrice,
+      lastQty,
+      bidPrice,
+      bidQty,
+      askPrice,
+      askQty,
+      volume,
+      quoteVolume,
+    } of response.data) {
+      let index = binanceAssets.findIndex((item) => item.symbol === symbol);
+      if (index !== -1) {
+        const assetData = binanceAssets[index];
+        binanceAssets[index] = {
+          ...assetData,
+          lastPrice,
+          lastQty,
+          bidPrice,
+          bidQty,
+          askPrice,
+          askQty,
+          volume,
+          quoteVolume,
+        };
+      }
+    }
+    return binanceAssets;
+  };
+
+  useEffect(() => {
+    console.log("Getting Binance pairs and prices");
+    setLoading(true);
+    getBinanceTickerPrices()
+      .then((response) => {
+        setBinanceSymbols(response);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log("Setting binance websocket connection");
+    setBinanceWsClient(new WebSocket(binanceApiWsBaseUrl));
+
+    return () => {
+      if (binanceWsClient && binanceWsClient.readyState == binanceWsClient.OPEN) {
+        binanceWsClient.close();
+        setBinanceWsClient(null);
+      }
+    };
+  }, [reconnectBinanceWs]);
+
+  useEffect(() => {
+    console.log("Setting binanceWsClient callback functions");
+    if (binanceWsClient) {
+      binanceWsClient.onopen = () => {
+        toast.success("The Binance WebSocket connection has been opened successfully", {
+          position: "top-right",
+          toastId: uuid(),
+        });
+        binanceWsClient.send(
+          JSON.stringify({
+            method: "SUBSCRIBE",
+            params: ["!ticker@arr"],
+            id: binanceWsId,
+          }),
+        );
+      };
+
+      binanceWsClient.onmessage = (message) => {
+        console.log(`New Message Received: ${JSON.stringify(message)}`);
+        const { s: symbol, b: bidPrice, B: bidQty, a: askPrice, A: askQty } = message;
+        if (symbol && bidPrice && askPrice) {
+          toast.info(`Updating price to Binance symbol ${symbol}`, {
+            position: "top-left",
+            toastId: uuid(),
+          });
+          const binanceAssets = binanceSymbols;
+          const index = binanceAssets.findIndex((item) => item.symbol === symbol);
+          const assetData = binanceAssets[index];
+          binanceAssets[index] = { ...assetData, bidPrice, bidQty, askPrice, askQty };
+          setBinanceSymbols(binanceAssets);
+        }
+      };
+
+      binanceWsClient.onclose = (event) => {
+        toast.error("Binance websocket connection closed!", {
+          position: "top-right",
+          toastId: uuid(),
+        });
+        setReconnectBinanceWs((previous) => !previous);
+      };
+
+      binanceWsClient.onerror = (error) => {
+        toast.error("Binance Websocket connection error", {
+          position: "top-right",
+          toastId: uuid(),
+        });
+      };
+    }
+  }, [binanceWsClient]);
 
   useEffect(() => {
     console.log("Updating prices...");
@@ -47,7 +175,7 @@ const Home = () => {
                 placement="left"
                 animate={{
                   mount: { scale: 1, x: 0 },
-                  unmount: { scale: 0, x: 25 }
+                  unmount: { scale: 0, x: 25 },
                 }}
               >
                 <div>
@@ -80,6 +208,7 @@ const Home = () => {
         </div>
       )}
       <Footer />
+      <ToastContainer />
     </Private>
   );
 };

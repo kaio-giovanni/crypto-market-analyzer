@@ -3,3 +3,7 @@ export const authClientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 export const coinApiBaseUrl = import.meta.env.VITE_COIN_API_BASE_URL;
 export const coinApiKey = import.meta.env.VITE_COIN_API_KEY;
 export const coinApiWsUrl = import.meta.env.VITE_COIN_API_WS_URL;
+export const binanceApiBaseUrl = import.meta.env.VITE_BINANCE_API_BASE_URL;
+export const binanceApiWsBaseUrl = import.meta.env.VITE_BINANCE_API_WS_URL;
+export const binanceApiKey = import.meta.env.VITE_BINANCE_API_KEY;
+export const binanceApiSecretKey = import.meta.env.VITE_BINANCE_API_SECRET_KEY;

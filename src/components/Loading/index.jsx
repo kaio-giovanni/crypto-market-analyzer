@@ -28,7 +28,7 @@ const Loading = ({ type = "default" }) => {
 };
 
 Loading.propTypes = {
-  type: PropTypes.string
+  type: PropTypes.string,
 };
 
 export default Loading;

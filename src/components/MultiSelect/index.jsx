@@ -7,7 +7,7 @@ const MultiSelect = ({ options, selectedItems, inputPlaceHolder, setSelectedItem
   const [disabledBtn, setDisabledBtn] = useState({});
   const btnRemoveItemProps = {
     disabled: true,
-    tooltip: "Item removal not allowed"
+    tooltip: "Item removal not allowed",
   };
 
   const toggleDropdownBtn = () => {
@@ -52,7 +52,7 @@ const MultiSelect = ({ options, selectedItems, inputPlaceHolder, setSelectedItem
                 content={btnRemoveItemProps.tooltip}
                 animate={{
                   mount: { scale: 1, y: 0 },
-                  unmount: { scale: 0, y: 25 }
+                  unmount: { scale: 0, y: 25 },
                 }}
               >
                 <button
@@ -149,7 +149,7 @@ MultiSelect.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedItems: PropTypes.arrayOf(PropTypes.string).isRequired,
   inputPlaceHolder: PropTypes.string.isRequired,
-  setSelectedItems: PropTypes.func.isRequired
+  setSelectedItems: PropTypes.func.isRequired,
 };
 
 export default MultiSelect;

@@ -23,9 +23,9 @@ const AuthProvider = ({ children }) => {
       const response = await fetch("your-api-endpoint/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
 
       const res = await response.json();
@@ -36,8 +36,8 @@ const AuthProvider = ({ children }) => {
           "userData",
           JSON.stringify({
             user: res.data.user,
-            token: res.token
-          })
+            token: res.token,
+          }),
         );
         navigate("/home");
         return;

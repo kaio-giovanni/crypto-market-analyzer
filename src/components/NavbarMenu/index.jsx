@@ -10,7 +10,7 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Collapse
+  Collapse,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -19,7 +19,7 @@ import {
   InboxArrowDownIcon,
   PowerIcon,
   Bars2Icon,
-  CodeBracketSquareIcon
+  CodeBracketSquareIcon,
 } from "@heroicons/react/24/solid";
 import { useAuth0 } from "@auth0/auth0-react";
 import Logo from "../../assets/logo2.png";
@@ -58,7 +58,7 @@ const ProfileMenu = () => {
         <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded">
           {createElement(UserCircleIcon, {
             className: "h-4 w-4",
-            strokeWidth: 2
+            strokeWidth: 2,
           })}
           <Link to="/home" replace={true}>
             <Typography as="span" variant="small" className="font-normal" color={"inherit"}>
@@ -70,7 +70,7 @@ const ProfileMenu = () => {
         <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded">
           {createElement(Cog6ToothIcon, {
             className: "h-4 w-4",
-            strokeWidth: 2
+            strokeWidth: 2,
           })}
           <Link to="/home" replace={true}>
             <Typography as="span" variant="small" className="font-normal" color={"inherit"}>
@@ -82,7 +82,7 @@ const ProfileMenu = () => {
         <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded">
           {createElement(InboxArrowDownIcon, {
             className: "h-4 w-4",
-            strokeWidth: 2
+            strokeWidth: 2,
           })}
           <Link to="/home" replace={true}>
             <Typography as="span" variant="small" className="font-normal" color={"inherit"}>
@@ -94,7 +94,7 @@ const ProfileMenu = () => {
         <MenuItem onClick={closeMenu} className="flex items-center gap-2 rounded ">
           {createElement(PowerIcon, {
             className: "h-4 w-4 text-red-500",
-            strokeWidth: 2
+            strokeWidth: 2,
           })}
           <Typography
             as="span"
@@ -104,7 +104,7 @@ const ProfileMenu = () => {
             onClick={() => {
               console.log("Logout...");
               logout({
-                logoutParams: { returnTo: `${window.location.origin}/login` }
+                logoutParams: { returnTo: `${window.location.origin}/login` },
               });
             }}
           >
@@ -119,8 +119,8 @@ const ProfileMenu = () => {
 const navListItems = [
   {
     label: "Exchanges",
-    icon: CodeBracketSquareIcon
-  }
+    icon: CodeBracketSquareIcon,
+  },
 ];
 
 const NavList = () => {

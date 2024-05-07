@@ -7,10 +7,10 @@ export default [
   {
     languageOptions: { globals: globals.browser },
     rules: {
-      "react/react-in-jsx-scope": "off"
-    }
+      "react/react-in-jsx-scope": "off",
+    },
   },
   eslintConfigPrettier,
   pluginJs.configs.recommended,
-  pluginReactConfig
+  pluginReactConfig,
 ];

@@ -23,7 +23,7 @@ const Private = (props) => {
 };
 
 Private.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.arrayOf(PropTypes.element),
 };
 
 export default Private;
