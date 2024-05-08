@@ -8,65 +8,35 @@ import Loading from "../../components/Loading";
 import DefaultCard from "../../components/Card";
 import MultiSelect from "../../components/MultiSelect";
 import Footer from "../../components/Footer";
-import { binanceApi } from "../../services/http_client";
-import { binanceApiWsBaseUrl } from "../../utils/dotenv";
+import { getBinanceTickerPrices } from "../../services/binance_client";
+import { getMBTickerPrice } from "../../services/mb_client";
+import { binanceApiWsBaseUrl, mbApiWsBaseUrl } from "../../utils/dotenv";
 import CoinIcon from "../../assets/bitcoin.jpg";
 
 const Home = () => {
+  // supported exchanges
   const [exchanges] = useState(["BINANCE", "MERCADO BITCOIN"]);
   const [selectedExchanges, setSelectedExchanges] = useState(exchanges);
   const [selectedCrypto, setSelectedCrypto] = useState(["BRL", "USDT"]);
+  const [rateByExchanges, setRateByExchanges] = useState([]);
+
+  // BINANCE
   const [binanceSymbols, setBinanceSymbols] = useState([]);
   const [binanceWsClient, setBinanceWsClient] = useState(null);
   const [reconnectBinanceWs, setReconnectBinanceWs] = useState(false);
-  const [rateByExchanges, setRateByExchanges] = useState([]);
-  const [loading, setLoading] = useState(false);
   const binanceWsId = uuid();
-
-  const getBinancePairs = async () => {
-    const response = await binanceApi.get("/api/v3/exchangeInfo");
-
-    const bnbSymbols = response.data.symbols
-      .filter((d) => d.status === "TRADING")
-      .map(({ baseAsset, quoteAsset, symbol }) => {
-        return { baseAsset, quoteAsset, symbol };
-      });
-
-    return bnbSymbols;
+  const binanceSubscribeMsg = {
+    method: "SUBSCRIBE",
+    params: ["!ticker@arr"],
+    id: binanceWsId,
   };
 
-  const getBinanceTickerPrices = async () => {
-    const binanceAssets = await getBinancePairs();
-    const response = await binanceApi.get("/api/v3/ticker/24hr");
-    for (const {
-      symbol,
-      lastPrice,
-      lastQty,
-      bidPrice,
-      bidQty,
-      askPrice,
-      askQty,
-      volume,
-      quoteVolume,
-    } of response.data) {
-      let index = binanceAssets.findIndex((item) => item.symbol === symbol);
-      if (index !== -1) {
-        const assetData = binanceAssets[index];
-        binanceAssets[index] = {
-          ...assetData,
-          lastPrice,
-          lastQty,
-          bidPrice,
-          bidQty,
-          askPrice,
-          askQty,
-          volume,
-          quoteVolume,
-        };
-      }
-    }
-    return binanceAssets;
-  };
+  // MERCADO BITCOIN
+  const [mbSymbols, setMBSymbols] = useState([]);
+  const [mbWsClient, setMBWsClient] = useState(null);
+  const [reconnectMBWs, setReconnectMBWs] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log("Getting Binance pairs and prices");
@@ -80,6 +50,13 @@ const Home = () => {
         console.error(error);
         setLoading(false);
       });
+
+    getMBTickerPrice()
+      .then((response) => {
+        setMBSymbols(response);
+        console.log(response);
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   useEffect(() => {
@@ -95,6 +72,18 @@ const Home = () => {
   }, [reconnectBinanceWs]);
 
   useEffect(() => {
+    console.log("Setting Mercado Bitcoin websocket connection");
+    setMBWsClient(new WebSocket(mbApiWsBaseUrl));
+
+    return () => {
+      if (mbWsClient && mbWsClient.readyState == mbWsClient.OPEN) {
+        mbWsClient.close();
+        setMBWsClient(null);
+      }
+    };
+  }, [reconnectMBWs]);
+
+  useEffect(() => {
     console.log("Setting binanceWsClient callback functions");
     if (binanceWsClient) {
       binanceWsClient.onopen = () => {
@@ -102,13 +91,7 @@ const Home = () => {
           position: "top-right",
           toastId: uuid(),
         });
-        binanceWsClient.send(
-          JSON.stringify({
-            method: "SUBSCRIBE",
-            params: ["!ticker@arr"],
-            id: binanceWsId,
-          }),
-        );
+        binanceWsClient.send(JSON.stringify(binanceSubscribeMsg));
       };
 
       binanceWsClient.onmessage = (message) => {
@@ -143,6 +126,28 @@ const Home = () => {
       };
     }
   }, [binanceWsClient]);
+
+  useEffect(() => {
+    console.log("Setting Mercado Bitcoin WebSocket callback functions");
+    if (mbWsClient) {
+      mbWsClient.onopen = () => {
+        console.log("Mercado Bitcoin Websocket ONOPEN");
+      };
+
+      mbWsClient.onmessage = (message) => {
+        console.log(JSON.stringify(message));
+      };
+
+      mbWsClient.onclose = (event) => {
+        console.log("Mercado Bitcoin Websocket ONCLOSE");
+        setReconnectMBWs((previous) => !previous);
+      };
+
+      mbWsClient.onerror = (error) => {
+        console.error(`Mercado Bitcoin ONERROR ${error}`);
+      };
+    }
+  }, [mbWsClient]);
 
   useEffect(() => {
     console.log("Updating prices...");

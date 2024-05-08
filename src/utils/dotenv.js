@@ -7,3 +7,5 @@ export const binanceApiBaseUrl = import.meta.env.VITE_BINANCE_API_BASE_URL;
 export const binanceApiWsBaseUrl = import.meta.env.VITE_BINANCE_API_WS_URL;
 export const binanceApiKey = import.meta.env.VITE_BINANCE_API_KEY;
 export const binanceApiSecretKey = import.meta.env.VITE_BINANCE_API_SECRET_KEY;
+export const mbApiBaseUrl = import.meta.env.VITE_MB_API_BASE_URL;
+export const mbApiWsBaseUrl = import.meta.env.VITE_MB_API_WS_URL;
