@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import PropTypes from "prop-types";
 
 const Table = ({ tableData, headers }) => {
   const [currentData, setCurrentData] = useState([]);
@@ -120,6 +121,16 @@ const Table = ({ tableData, headers }) => {
       </div>
     </>
   );
+};
+
+Table.propTypes = {
+  headers: PropTypes.arrayOf(
+    PropTypes.shape({
+      headerName: PropTypes.string.isRequired,
+      headerId: PropTypes.string.isRequired,
+    }),
+  ),
+  tableData: PropTypes.arrayOf(PropTypes.object.isRequired),
 };
 
 export default Table;

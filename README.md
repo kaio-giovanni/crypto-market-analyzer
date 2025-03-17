@@ -1,6 +1,6 @@
 # Crypto Stock Market
 
-This is a React project that gets cryptocurrency prices from multiples exchanges and show the data for further process.
+This is a React project that gets cryptocurrency prices from multiple exchanges and shows the data for further processing.
 
 ## Dependencies
 
@@ -44,6 +44,57 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Code formatting and Lint
+
+Make sure you have installed the Prettier and ESLINT extension for vscode.
+
+- Type the shortcut Ctrl + Shift + P and look for Preferences: Open settings (JSON)
+
+The JSON must have the following lines
+
+```json
+{
+  //...
+  "eslint.autoFixOnSave": true,
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+  "eslint.validate": [
+    {
+      "language": "javascript",
+      "autoFix": true
+    },
+    {
+      "language": "javascriptreact",
+      "autoFix": true
+    },
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": true
+    }
+  ],
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+
+## Binance API Documentations
+
+[All market tickers stream](https://github.com/binance/binance-spot-api-docs/blob/master/web-socket-streams.md#all-market-tickers-stream)
 
 ## Learn More
 

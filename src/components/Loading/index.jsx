@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Loading = ({ type = "default" }) => {
   const classColor = type === "default" ? "fill-blue-600" : `fill-${type}`;
@@ -24,6 +25,10 @@ const Loading = ({ type = "default" }) => {
       <span className="sr-only">Loading...</span>
     </div>
   );
+};
+
+Loading.propTypes = {
+  type: PropTypes.string,
 };
 
 export default Loading;

@@ -4,7 +4,7 @@ import Private from "../../components/Private";
 import Table from "../../components/Table";
 import Loading from "../../components/Loading";
 import Footer from "../../components/Footer";
-import api from "../../services/http_requests";
+import { coinApi } from "../../services/http_client";
 
 const ExchangeTable = () => {
   const [exchanges, setExchanges] = useState([]);
@@ -14,12 +14,12 @@ const ExchangeTable = () => {
     { headerName: "Exchange", headerId: "exchange_id" },
     { headerName: "Website", headerId: "website" },
     { headerName: "N. Crypto", headerId: "data_symbols_count" },
-    { headerName: "VOLUME USD DAY", headerId: "volume_1day_usd" }
+    { headerName: "VOLUME USD DAY", headerId: "volume_1day_usd" },
   ];
 
   useEffect(() => {
     setLoading(true);
-    api
+    coinApi
       .get("/v1/exchanges")
       .then((response) => {
         const data = response.data;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthProvider";
 import Loading from "../../components/Loading";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logo2.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleSubmitEvent = (e) => {
@@ -37,7 +37,7 @@ const Login = () => {
     const { name, value } = e.target;
     setInput((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
